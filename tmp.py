@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from django.db import models
@@ -11,9 +12,10 @@ class Scan(models.Model):
 
         verbose_name = "Scan"
         verbose_name_plural = "Scans"
+        app_label = "neurohub.base_models"
 
     nifti_path = models.CharField(max_length=255)
-    # json_path = models.CharField(max_length=255)
+    json_path = models.CharField(max_length=255, null=True)
 
     def get_path_name(self):
         """Return the name of the NIfTI file."""
@@ -22,3 +24,9 @@ class Scan(models.Model):
     def __str__(self):
         """Return the name of the scan."""
         return self.get_path_name()
+
+    def read_json(self):
+        """Read the JSON file."""
+
+        with open(self.json_path) as f:
+            return json.load(f)

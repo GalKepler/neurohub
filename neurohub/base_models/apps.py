@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BaseModelsConfig(AppConfig):
+class ModelsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "base_models"
+    name = "neurohub.base_models"
