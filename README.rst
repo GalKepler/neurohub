@@ -41,7 +41,7 @@ NeuroHub
     :target: https://github.com/cookiecutter/cookiecutter-django/
     :alt: Built with cookiecutter-django
 
-.. |code-quality| image:: https://app.codacy.com/project/badge/Grade/b31cb38534da448b9833b0ac2e1f4327
+.. |code-quality| image:: https://app.codacy.com/project/badge/Grade/2ee74df0bcc04486bbd939fa184f1431
     :target: https://www.codacy.com/gh/GalKepler/neurohub/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GalKepler/neurohub&amp;utm_campaign=Badge_Grade
     :alt: Code quality
 
