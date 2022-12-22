@@ -19,6 +19,7 @@ class Scan(models.Model):
     nifti_path = models.CharField(max_length=255)
     json_path = models.CharField(max_length=255, null=True)
     related_scans = models.ManyToManyField("self")
+    is_raw = models.BooleanField(default=False)
 
     def __init__(self, *args, **kwargs):
         """Initialize the Scan object."""
@@ -49,11 +50,6 @@ class Scan(models.Model):
         image_size = self.nifti.shape
         for dim in dim_info:
             setattr(self, f"dimension_{DIMENSIONS_TO_AXES[dim]}", image_size[dim])
-
-    @property
-    def id(self):
-        """Return the ID of the scan."""
-        return self.pk
 
     @property
     def nifti(self):
