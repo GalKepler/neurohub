@@ -1,4 +1,6 @@
-from config.settings.base import INSTALLED_APPS, MIDDLEWARE, env
+# from config.settings.base import INSTALLED_APPS, MIDDLEWARE, env
+from .base import *  # noqa
+from .base import env
 
 # GENERAL
 # ------------------------------------------------------------------------------

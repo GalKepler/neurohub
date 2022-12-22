@@ -1,3 +1,9 @@
+# from config.settings.base import (
+#     DATABASES,
+#     INSTALLED_APPS,
+#     env
+# )  # noqa F401
+
 from .base import *  # noqa
 from .base import env
 
