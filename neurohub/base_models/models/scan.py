@@ -12,7 +12,6 @@ class Scan(models.Model):
 
         verbose_name = "Scan"
         verbose_name_plural = "Scans"
-        app_label = "base_models"
 
     nifti_path = models.CharField(max_length=255)
     json_path = models.CharField(max_length=255, null=True)
