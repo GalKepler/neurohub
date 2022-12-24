@@ -18,7 +18,7 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["github.com"])
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int(  # noqa F405
     "CONN_MAX_AGE", default=60
-)  # noqa F405
+)
 
 # CACHES
 # ------------------------------------------------------------------------------
