@@ -34,7 +34,9 @@ class TensorDerivative(TimeStampedModel):
         Check that the parent scan and the derivative are from the same subject.
         """
         for entity in MATCHING_ENTITIES:
-            if self.parent.bids_entities.get(entity) != self.bids_entities.get(entity):
+            if self.parent.bids_entities.get(entity) != self.bids_entities.get(
+                entity
+            ):
                 raise ValueError(
                     f"The parent scan and the derivative are not from the same {entity}."
                 )

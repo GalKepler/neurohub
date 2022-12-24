@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+    "setuptools>=30.3.0",
+    "wheel",
+]
+
+[tool.black]
+line-length = 79
+skip-string-normalization = false
+
+[tool.isort]
+skip = [".gitignore"]
+extend_skip = [".rst",".*"]
+skip_glob=["docs/*","venv/*",".tox/*"]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = ["*tests*", "venv/**", "setup.py"]
+command_line = "-m pytest tests"
+
+[tool.coverage.paths]
+source = ["src"]
