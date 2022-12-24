@@ -2,7 +2,6 @@
 Definition of the :class:`NIfTI` model.
 """
 import json
-import logging
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -26,7 +25,7 @@ class NIfTI(TimeStampedModel):
         "self",
         on_delete=models.CASCADE,
         null=True,
-        related_name="derivative_set",
+        related_name="nifti_derivative_set",
     )
 
     #: Whether the created instance is the product of a direct conversion from
@@ -40,9 +39,6 @@ class NIfTI(TimeStampedModel):
 
     # Used to cache JSON data to prevent multiple reads.
     _json_data = None
-
-    # Logger instance for this model.
-    _logger = logging.getLogger("data.mri.nifti")
 
     class Meta:
         verbose_name = "NIfTI"
