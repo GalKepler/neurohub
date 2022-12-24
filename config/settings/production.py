@@ -16,7 +16,9 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["github.com"])
 
 # DATABASES
 # ------------------------------------------------------------------------------
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
+DATABASES["default"]["CONN_MAX_AGE"] = env.int(  # noqa F405
+    "CONN_MAX_AGE", default=60
+)  # noqa F405
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -85,7 +87,9 @@ AWS_S3_MAX_MEMORY_SIZE = env.int(
 AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront
 AWS_S3_CUSTOM_DOMAIN = env("DJANGO_AWS_S3_CUSTOM_DOMAIN", default=None)
-aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+aws_s3_domain = (
+    AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+)
 # STATIC
 # ------------------------
 STATICFILES_STORAGE = "neurohub.utils.storages.StaticRootS3Boto3Storage"
@@ -127,7 +131,9 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 ANYMAIL = {
     "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
     "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
-    "MAILGUN_API_URL": env("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
+    "MAILGUN_API_URL": env(
+        "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
+    ),
 }
 
 # Collectfast
@@ -146,7 +152,9 @@ INSTALLED_APPS = ["collectfast"] + INSTALLED_APPS  # noqa F405
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
+    },
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "

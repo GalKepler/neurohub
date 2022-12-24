@@ -9,6 +9,7 @@ line-length = 79
 skip-string-normalization = false
 
 [tool.isort]
+profile = "black"
 skip = [".gitignore"]
 extend_skip = [".rst",".*"]
 skip_glob=["docs/*","venv/*",".tox/*"]
