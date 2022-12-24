@@ -7,12 +7,12 @@ env:
 
 on:
   pull_request:
-    branches: [ "master", "main" ]
-    paths-ignore: [ "docs/**" ]
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
 
   push:
-    branches: [ "master", "main" ]
-    paths-ignore: [ "docs/**" ]
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
@@ -22,7 +22,6 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout Code Repository
         uses: actions/checkout@v3
 
@@ -36,7 +35,11 @@ jobs:
             requirements/local.txt
 
       - name: Run pre-commit
-        uses: pre-commit/action@v3.0.0
+        run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+      - uses: pre-commit/action@v3.0.0
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   pytest:
@@ -55,7 +58,6 @@ jobs:
       DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
 
     steps:
-
       - name: Checkout Code Repository
         uses: actions/checkout@v3
 
@@ -74,4 +76,4 @@ jobs:
           pip install -r requirements/local.txt
 
       - name: Test with pytest
-        run:  pytest
+        run: pytest
