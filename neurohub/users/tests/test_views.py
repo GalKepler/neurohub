@@ -11,7 +11,11 @@ from django.urls import reverse
 from neurohub.users.forms import UserAdminChangeForm
 from neurohub.users.models import User
 from neurohub.users.tests.factories import UserFactory
-from neurohub.users.views import UserRedirectView, UserUpdateView, user_detail_view
+from neurohub.users.views import (
+    UserRedirectView,
+    UserUpdateView,
+    user_detail_view,
+)
 
 pytestmark = pytest.mark.django_db
 
