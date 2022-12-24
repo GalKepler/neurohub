@@ -49,9 +49,7 @@ class Scan(models.Model):
         dim_info = self.nifti.header.get_dim_info()
         image_size = self.nifti.shape
         for dim in dim_info:
-            setattr(
-                self, f"dimension_{DIMENSIONS_TO_AXES[dim]}", image_size[dim]
-            )
+            setattr(self, f"dimension_{DIMENSIONS_TO_AXES[dim]}", image_size[dim])
 
     @property
     def nifti(self):
