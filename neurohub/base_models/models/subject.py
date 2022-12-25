@@ -30,7 +30,7 @@ class Subject(TimeStampedModel):
     }
 
     #: Some representative ID number unique to this subject.
-    pylabber_id = models.CharField(max_length=64, blank=True, null=True)
+    pylabber_id = models.CharField(max_length=64, blank=True, null=True, unique=True)
 
     #: Subject's first name.
     first_name = models.CharField(max_length=64, blank=True, null=True)
@@ -52,7 +52,7 @@ class Subject(TimeStampedModel):
     BIDS_DIR_TEMPLATE: str = "sub-{pk}"
 
     class Meta:
-        ordering = ("-id",)
+        ordering = ("-pylabber_id",)
 
     def __str__(self) -> str:
         """
@@ -118,19 +118,6 @@ class Subject(TimeStampedModel):
             setattr(self, key, this_subject[value].squeeze())
         self.save()
 
-    # def get_raw_information(self) -> pd.Series:
-    #     """
-    #     Temporary method to use an external table to retrieve subject
-    #     information.
-
-    #     Returns
-    #     -------
-    #     pd.Series
-    #         Subject information
-    #     """
-    #     this_subject = self.get_personal_information()
-    #     return this_subject["Raw"].squeeze()
-
     # def get_questionnaire_data(self):
     #     """
     #     A method to link between a subject to it's questionnaire data.
@@ -151,3 +138,16 @@ class Subject(TimeStampedModel):
     #         subject_data, questionnaire
     #     )
     #     return output[self.id_number == output["Anonymized", "Patient ID"]]
+
+    @property
+    def crf_information(self) -> pd.DataFrame:
+        """
+        Temporary method to use an external table to retrieve subject
+        personal information.
+
+        Returns
+        -------
+        pd.DataFrame
+            Subject personal information
+        """
+        return self.get_crf_information()
