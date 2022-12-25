@@ -5,8 +5,6 @@ from bids.layout import parse_file_entities
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
-from neurohub.base_models.models import NIfTI
-
 TENSOR_ESTIMATORS = ["dipy", "mrtrix3", "fsl"]
 MATCHING_ENTITIES = ["subject", "session"]
 
@@ -23,10 +21,10 @@ class TensorDerivative(TimeStampedModel):
 
     # the scan this derivative is associated with
     parent = models.ForeignKey(
-        NIfTI,
+        "base_models.NIfTI",
         on_delete=models.CASCADE,
         null=True,
-        related_name="processed_derivative_set",
+        related_name="tensor_derivatives_set",
     )
 
     def validate_same_bids_entities(self):
