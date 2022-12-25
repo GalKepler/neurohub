@@ -10,6 +10,8 @@ from bids.layout import parse_file_entities
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
+# from neurohub.base_models
+
 
 class NIfTI(TimeStampedModel):
     """
@@ -20,7 +22,7 @@ class NIfTI(TimeStampedModel):
 
     #: Path of the *.nii* file within the application's media directory.
     path = models.FilePathField(max_length=1000, unique=True)
-
+    #: Associated :class:`~neurohub.base_models.models.nifti.NIfTI` instance
     parent = models.ForeignKey(
         "self",
         on_delete=models.CASCADE,
