@@ -27,7 +27,7 @@ class NIfTI(TimeStampedModel):
         "self",
         on_delete=models.CASCADE,
         null=True,
-        related_name="nifti_derivative_set",
+        related_name="nifti_derivatives_set",
     )
 
     #: Whether the created instance is the product of a direct conversion from
