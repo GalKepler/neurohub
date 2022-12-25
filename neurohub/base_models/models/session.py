@@ -7,7 +7,7 @@ from pathlib import Path
 from django.db import models
 from django.db.models.query import QuerySet
 from django_extensions.db.models import TimeStampedModel
-from meteostat import Point
+from meteostat import Hourly, Point
 
 from neurohub.base_models.models.tensor_derivative import TensorDerivative
 
@@ -86,6 +86,23 @@ class Session(TimeStampedModel):
         """
         return TensorDerivative.objects.filter(parent__in=self.nifti_set.all())
 
+    def get_weather_data(self) -> dict:
+        """
+        Returns the weather data for the session location.
+        Returns
+        -------
+        pd.DataFrame
+            `Hourly weather data`_
+            .. _Hourly weather data: https://dev.meteostat.net/api/point/hourly.html
+        """
+        day_start = self.time.replace(hour=0, minute=0, second=0)
+        day_end = self.time.replace(hour=23, minute=59, second=59)
+        weather_during_day = Hourly(self.POINT, day_start, day_end).fetch()
+        closest_reading = weather_during_day.index[
+            weather_during_day.index.searchsorted(self.time)
+        ]
+        return weather_during_day.loc[[closest_reading]]
+
     @property
     def derivatives_set(self) -> QuerySet:
         """
@@ -121,3 +138,15 @@ class Session(TimeStampedModel):
         if not self._time:
             self.infer_time_from_nifti()
         return self._time
+
+    @property
+    def weather_data(self) -> dict:
+        """
+        Returns the weather data for the session location.
+        Returns
+        -------
+        pd.DataFrame
+            `Hourly weather data`_
+            .. _Hourly weather data: https://dev.meteostat.net/api/point/hourly.html
+        """
+        return self.get_weather_data()
