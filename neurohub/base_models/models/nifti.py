@@ -29,7 +29,13 @@ class NIfTI(TimeStampedModel):
         null=True,
         related_name="nifti_derivatives_set",
     )
-
+    #: Associate this NIfTI with some session.
+    session = models.ForeignKey(
+        "base_models.Session",
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="nifti_set",
+    )
     #: Whether the created instance is the product of a direct conversion from
     #: some raw format to NIfTI or of a manipulation of the data.
     is_raw = models.BooleanField(default=False)
