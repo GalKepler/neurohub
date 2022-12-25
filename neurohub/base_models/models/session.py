@@ -7,6 +7,7 @@ from pathlib import Path
 from django.db import models
 from django.db.models.query import QuerySet
 from django_extensions.db.models import TimeStampedModel
+from meteostat import Point
 
 from neurohub.base_models.models.tensor_derivative import TensorDerivative
 
@@ -24,9 +25,16 @@ class Session(TimeStampedModel):
     #: The date and time in which this scanning sequence began.
     _time = models.DateTimeField(null=True)
 
+    #: BIDS format directory name.
     BIDS_DIR_TEMPLATE: str = "ses-{date}{time}"
+
+    #: BIDS format session date format.
     SESSION_DATE_FORMAT: str = "%Y%m%d"
     SESSION_TIME_FORMAT: str = "%H%M"
+
+    #: Location of the scanning session.
+    LOCATION = {"lon": 34.8, "lat": 32.0833}  # Tel Aviv
+    POINT = Point(**LOCATION)
 
     def __str__(self) -> str:
         """
