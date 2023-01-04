@@ -272,3 +272,8 @@ tags
 neurohub/media/
 
 .pytest_cache/
+
+*.env
+CRF.xlsx
+pylabber.csv
+questionnaire.xlsx

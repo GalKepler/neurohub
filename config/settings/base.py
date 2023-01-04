@@ -275,3 +275,6 @@ SOCIALACCOUNT_FORMS = {"signup": "neurohub.users.forms.UserSocialSignupForm"}
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+CRF_TABLE_PATH = "CRF.xlsx"
+PYLABBER_TABLE_PATH = "pylabber.csv"
+QUESTIONNAIRE_PATH = "questionnaire.xlsx"

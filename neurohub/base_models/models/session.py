@@ -25,6 +25,14 @@ class Session(TimeStampedModel):
     #: The date and time in which this scanning sequence began.
     _time = models.DateTimeField(null=True)
 
+    #: The subject this session belongs to.
+    subject = models.ForeignKey(
+        "base_models.Subject",
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="session_set",
+    )
+
     #: BIDS format directory name.
     BIDS_DIR_TEMPLATE: str = "ses-{date}{time}"
 
@@ -46,7 +54,9 @@ class Session(TimeStampedModel):
         """
         date = self.time.date()
         if hasattr(self, "subject"):
-            return CLAIMED_SESSION_STRING.format(subject_id=self.subject.id, date=date)
+            return CLAIMED_SESSION_STRING.format(
+                subject_id=self.subject.pylabber_id, date=date
+            )
         return UNCLAIMED_SESSION_STRING.format(date=date)
 
     def infer_time_from_nifti(self) -> None:
