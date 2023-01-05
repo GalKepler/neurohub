@@ -27,6 +27,11 @@ class TensorDerivative(TimeStampedModel):
         related_name="tensor_derivatives_set",
     )
 
+    #: BIDS entities for easy access
+    acquisition = models.CharField(max_length=100, null=True)
+    atlas = models.CharField(max_length=100, null=True)
+    label = models.CharField(max_length=100, null=True)
+
     def validate_same_bids_entities(self):
         """
         Check that the parent scan and the derivative are from the same subject.
@@ -48,6 +53,13 @@ class TensorDerivative(TimeStampedModel):
         Return the BIDS entities of the parent scan.
         """
         return parse_file_entities(self.path)
+
+    def set_bids_entities_as_properties(self):
+        """
+        Set the BIDS entities of the parent scan as properties.
+        """
+        for entity, value in self.bids_entities.items():
+            setattr(self, entity, value)
 
     def get_estimator(self):
         """
