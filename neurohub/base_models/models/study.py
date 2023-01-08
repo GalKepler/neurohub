@@ -5,6 +5,7 @@ import pandas as pd
 from django.db import models
 from django_extensions.db.models import TimeStampedModel, TitleDescriptionModel
 
+from neurohub.base_models.models.session import Session
 from neurohub.base_models.models.subject import Subject
 
 STUDY_IMAGE_UPLOAD_DESTINATION: str = "images/studies"
@@ -43,6 +44,17 @@ class Study(TitleDescriptionModel, TimeStampedModel):
             QuerySet of associated subjects
         """
         return Subject.objects.filter(
+            condition__in=self.conditions.all(), group__in=self.groups.all()
+        )
+
+    def query_associated_sessions(self):
+        """
+        Returns
+        -------
+        QuerySet
+            QuerySet of associated sessions
+        """
+        return Session.objects.filter(
             condition__in=self.conditions.all(), group__in=self.groups.all()
         )
 

@@ -15,6 +15,8 @@ class Group(TitleDescriptionModel, TimeStampedModel):
     #: might be used for "caching" associated subjects to save queries.
     subjects = models.ManyToManyField("base_models.Subject", blank=True)
 
+    sessions = models.ManyToManyField("base_models.Session", blank=True)
+
     def __str__(self):
         """
         Returns

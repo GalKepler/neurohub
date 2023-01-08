@@ -26,11 +26,12 @@ class TensorDerivative(TimeStampedModel):
         null=True,
         related_name="tensor_derivatives_set",
     )
-    session = models.OneToOneField(
+
+    session_parent = models.ForeignKey(
         "base_models.Session",
         on_delete=models.CASCADE,
         null=True,
-        related_name="tensor_derivative",
+        related_name="tensor_derivatives_set",
     )
 
     #: BIDS entities for easy access
@@ -38,6 +39,8 @@ class TensorDerivative(TimeStampedModel):
     acquisition = models.CharField(max_length=100, null=True)
     atlas = models.CharField(max_length=100, null=True)
     label = models.CharField(max_length=100, null=True)
+    session = models.CharField(max_length=100, null=True)
+    subject = models.CharField(max_length=100, null=True)
 
     def validate_same_bids_entities(self):
         """
@@ -48,6 +51,21 @@ class TensorDerivative(TimeStampedModel):
                 raise ValueError(
                     f"The parent scan and the derivative are not from the same {entity}."
                 )
+
+    def is_unique_derivative(self):
+        """
+        Check that the derivative is unique.
+        """
+        if self.__class__.objects.filter(
+            subject=self.subject,
+            session=self.session,
+            software_used=self.software_used,
+            acquisition=self.acquisition,
+            atlas=self.atlas,
+            label=self.label,
+        ).exists():
+            return False
+        return True
 
     def get_dataframe(self):
         """
@@ -89,10 +107,3 @@ class TensorDerivative(TimeStampedModel):
         Return the BIDS entities of the parent scan.
         """
         return self.get_bids_entities()
-
-    @property
-    def estimator(self):
-        """
-        Return the estimator used to produce this derivative.
-        """
-        return self.get_estimator()
