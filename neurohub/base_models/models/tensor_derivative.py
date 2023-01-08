@@ -20,14 +20,22 @@ class TensorDerivative(TimeStampedModel):
     path = models.FilePathField(max_length=1000, unique=True)
 
     # the scan this derivative is associated with
-    parent = models.ForeignKey(
+    nifti_parent = models.ForeignKey(
         "base_models.NIfTI",
         on_delete=models.CASCADE,
         null=True,
         related_name="tensor_derivatives_set",
     )
+    session = models.ForeignKey(
+        "base_models.Session",
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="tensor_derivatives_set",
+        unique=True,
+    )
 
     #: BIDS entities for easy access
+    software_used = models.CharField(max_length=100, null=True)
     acquisition = models.CharField(max_length=100, null=True)
     atlas = models.CharField(max_length=100, null=True)
     label = models.CharField(max_length=100, null=True)

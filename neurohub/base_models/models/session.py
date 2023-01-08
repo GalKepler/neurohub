@@ -22,8 +22,11 @@ class Session(TimeStampedModel):
     Represents a single MRI scanning session.
     """
 
-    #: The date and time in which this scanning sequence began.
-    _time = models.DateTimeField(null=True)
+    #: BIDS format directory name.
+    bids_dir = models.CharField(max_length=255, unique=True)
+
+    #: The time of the session.
+    time = models.DateTimeField(null=True)
 
     #: The subject this session belongs to.
     subject = models.ForeignKey(
@@ -44,6 +47,11 @@ class Session(TimeStampedModel):
     LOCATION = {"lon": 34.8, "lat": 32.0833}  # Tel Aviv
     POINT = Point(**LOCATION)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.time:
+            self.infer_time()
+
     def __str__(self) -> str:
         """
         Returns the string representation of this instance.
@@ -59,16 +67,14 @@ class Session(TimeStampedModel):
             )
         return UNCLAIMED_SESSION_STRING.format(date=date)
 
-    def infer_time_from_nifti(self) -> None:
+    def infer_time(self) -> None:
         """
-        Infers the time of the session from the time of the first NIfTI file.
+        Infers the time of the session from the BIDS directory name.
         """
-        nifti = self.nifti_set.first()
-        if nifti and not self._time:
-            time_str = nifti.bids_entities.get("session")
-            self._time = datetime.strptime(
-                time_str, self.SESSION_DATE_FORMAT + self.SESSION_TIME_FORMAT
-            )
+        time_str = self.bids_dir.split("-")[-1]
+        self.time = datetime.strptime(
+            time_str, self.SESSION_DATE_FORMAT + self.SESSION_TIME_FORMAT
+        )
 
     def list_nifti_files(self) -> list[Path]:
         """
@@ -135,19 +141,6 @@ class Session(TimeStampedModel):
             *.nii* files
         """
         return self.list_nifti_files()
-
-    @property
-    def time(self) -> datetime:
-        """
-        Returns the time of the session.
-        Returns
-        -------
-        datetime
-            Time of the session
-        """
-        if not self._time:
-            self.infer_time_from_nifti()
-        return self._time
 
     @property
     def weather_data(self) -> dict:

@@ -63,8 +63,6 @@ class Subject(TimeStampedModel):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self._bids_dir = None
-        self.update_subject_from_pylabber()
-        self.update_subject_from_crf()
 
     def __str__(self) -> str:
         """
@@ -170,3 +168,28 @@ class Subject(TimeStampedModel):
             Subject personal information
         """
         return self.get_crf_information()
+
+    @property
+    def pylabber_information(self) -> pd.DataFrame:
+        """
+        Temporary method to use an external table to retrieve subject
+        personal information.
+
+        Returns
+        -------
+        pd.DataFrame
+            Subject personal information
+        """
+        return self.get_pylabber_information()
+
+    @property
+    def questionnaire_data(self) -> pd.DataFrame:
+        """
+        A method to link between a subject to it's questionnaire data.
+
+        Returns
+        -------
+        pd.DataFrame
+            Subject and Questionnaire information.
+        """
+        return self.get_questionnaire_data()
