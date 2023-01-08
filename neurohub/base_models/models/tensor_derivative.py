@@ -26,12 +26,11 @@ class TensorDerivative(TimeStampedModel):
         null=True,
         related_name="tensor_derivatives_set",
     )
-    session = models.ForeignKey(
+    session = models.OneToOneField(
         "base_models.Session",
         on_delete=models.CASCADE,
         null=True,
-        related_name="tensor_derivatives_set",
-        unique=True,
+        related_name="tensor_derivative",
     )
 
     #: BIDS entities for easy access
