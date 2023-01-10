@@ -17,7 +17,7 @@ django-redis==5.2.0  # https://github.com/jazzband/django-redis
 
 # Neuroimaging
 # ------------------------------------------------------------------------------
-nibabel==4.0.2 # https://nipy.org/nibabel/
+nibabel==5.0.0 # https://nipy.org/nibabel/
 pybids==0.15.5 # https://bids-standard.github.io/pybids/
 meteostat==1.6.5 # https://dev.meteostat.net/python/
 
