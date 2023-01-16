@@ -33,3 +33,12 @@ def collect_tensor_derivatives(
                 session.subject = subject
                 session.save()
             pbar.update(1)
+
+
+def associate_sessions_to_studies() -> None:
+    """
+    Associates sessions to studies.
+    """
+    for session in Session.objects.all():
+        session.study = session.subject.study
+        session.save()
