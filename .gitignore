@@ -277,3 +277,5 @@ neurohub/media/
 CRF.xlsx
 pylabber.csv
 questionnaire.xlsx
+*.ipynb
+.idea/*

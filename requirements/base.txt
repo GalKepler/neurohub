@@ -24,3 +24,4 @@ meteostat==1.6.5 # https://dev.meteostat.net/python/
 # Utilities
 # ------------------------------------------------------------------------------
 git+https://github.com/TheLabbingProject/questionnaire_reader  #
+git+https://github.com/GalKepler/climbing_assessment_reader
