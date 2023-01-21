@@ -277,5 +277,6 @@ neurohub/media/
 CRF.xlsx
 pylabber.csv
 questionnaire.xlsx
+neurohub-374909-2b563177ea22.json
 *.ipynb
 .idea/*
