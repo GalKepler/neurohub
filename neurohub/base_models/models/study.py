@@ -20,6 +20,7 @@ class Study(TitleDescriptionModel, TimeStampedModel):
     image = models.ImageField(
         upload_to=STUDY_IMAGE_UPLOAD_DESTINATION, blank=True, null=True
     )
+    title = models.CharField(max_length=256, unique=True)
     groups = models.ManyToManyField("base_models.Group", blank=True)
     conditions = models.ManyToManyField("base_models.Condition", blank=True)
 
