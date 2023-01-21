@@ -39,5 +39,6 @@ STUDIES = {
         "conditions": ["Learners", "Controls"],
         "derive_study_from": "Group",
         "start_date": date(2021, 1, 1),
+        "ss": "",
     },
 }
